@@ -8,7 +8,11 @@ class webserv(http.server.BaseHTTPRequestHandler):
     def _set_headers(self):
         self.send_response(200) 
         self.send_header('Content-Type', 'text/html')
-        self.send_header('Access-Control-Allow-Origin', self.headers['Origin']) #local file sends origin header 'null'. 
+        
+        self.send_header('Access-Control-Allow-Origin', 
+                        self.headers['Origin']
+                        ) #local file sends origin header 'null'. 
+        
         self.send_header('Vary','Origin')
         self.end_headers()
     #
@@ -36,46 +40,60 @@ class webserv(http.server.BaseHTTPRequestHandler):
 
         startpoint = 1
 
-        for i in range(1,totalcount,1):
-            where = postb.find(boundary,startpoint)
+        i = 1
+
+        while i  < totalcount:
+            where = postb.find(boundary, startpoint)
             boundlist.append(where)
             startpoint = where + len(boundary)
-        # 
+            i = i + 1
+        #
 
         #print(boundlist)
 
         for start_headers in boundlist[0:-1]:
 
-            end_headers = postb.find(delimiter2,start_headers) #find the end of input header data
+            end_headers = postb.find(delimiter2, start_headers) #find the end of input header data
             
-            filename_start = postb.find(filename_start_delm,start_headers,end_headers) #end of name
+            filename_start = postb.find(filename_start_delm,
+                                        start_headers,
+                                        end_headers) #end of name
 
-            filename_end = postb.find(filename_end_delm,start_headers,end_headers) #end of filename
+            filename_end = postb.find(filename_end_delm,
+                                      start_headers,
+                                      end_headers) #end of filename
 
-            #print("start_headers: %s end_headers %s filename_start %s filename_end %s" % (start_headers,end_headers,filename_start,filename_end))
+            #print("start_headers: %s end_headers %s filename_start %s filename_end %s"
+            #  % (start_headers,end_headers,filename_start,filename_end))
 
             if start_headers == boundlist[len(boundlist)-2]:# in case of last input
                 endval = boundlist[len(boundlist)-1]
+            
             else:
                 endval = boundlist[boundlist.index(start_headers)+1]
+            
             #
 
-            if filename_start != -1: # in case a file was not loaded to that inputbox, there is no filename
+            if filename_start != -1: 
+                            # in case a file was not loaded to that inputbox, there is no filename
                 
-                filename = postb[(filename_start+filename_start_delmlen):(filename_end-3)] #without last "\r\n
+                filename = postb[(filename_start + filename_start_delmlen) 
+                                : (filename_end-3)
+                                ] #without last "\r\n
+                
                 filename = filename.decode().strip('\"')
 
-                name = postb[(start_headers+delimiter1len):filename_start]
-                name = name.decode().strip('\"')  
+                name = postb[(start_headers + delimiter1len) : filename_start]
+                name = name.decode().strip('\"')
             
             else:
                 filename = ''
 
-                name = postb[(start_headers+delimiter1len):end_headers]
+                name = postb[(start_headers + delimiter1len) : end_headers]
                 name = name.decode().strip('\"')
             #           
                   
-            value = postb[(end_headers+delimiter2len):(endval-2)] #without \r at the end
+            value = postb[(end_headers + delimiter2len) : (endval-2)] #without \r at the end
                 
             if filename == '':
                 value = value.decode()
@@ -83,7 +101,8 @@ class webserv(http.server.BaseHTTPRequestHandler):
                 pass
             #
 
-            #print("start_headers %s name %s filename %s value %s" % (start_headers,name,filename,value))
+            #print("start_headers %s name %s filename %s value %s"
+            #  % (start_headers,name,filename,value))
 
             resdict[name] = (filename,value)
         #
@@ -97,7 +116,8 @@ class webserv(http.server.BaseHTTPRequestHandler):
 
         boundary = self.headers['Content-Type'].split('=')[1] #get boundary
 
-        boundary = '--'+boundary #in headers, boundary is shorter by 2 "-" than in request body
+        boundary = '--'+boundary
+                    #in headers, boundary is shorter by 2 "-" than in request body
 
         postb = self.rfile.read(length) #read entire request body. result is bytes.
 
@@ -106,9 +126,10 @@ class webserv(http.server.BaseHTTPRequestHandler):
 
         #----------------- Insert Your Code Here in case of POST request --------------------------------------
         
-        #print(querystr) #querystr is dict with the request data. names as keys.
+        #print(querystr) #querystr is dict with the request data. names as keys. files in [0], textual data in [1]
 
-        replymsg = base64.b64encode(querystr['doc3'][1])#insert your reply into this variable. it should not be bytes. Else remove encode() below
+        replymsg = base64.b64encode(querystr['doc3'][1])
+                    #insert your reply into this variable. it should not be bytes. Else remove encode() below
 
         filedict = dict()
 
@@ -129,7 +150,8 @@ class webserv(http.server.BaseHTTPRequestHandler):
     #
 
     def do_GET(self):
-        urldict = urllib.parse.parse_qs(self.path[2:],True) #first is /, second is ?. threfore everything after them
+        urldict = urllib.parse.parse_qs(self.path[2:],True)
+                    #first is /, second is ?. threfore everything after them
         
         #----------------- Insert Your Code Here in case of GET request --------------------------------------
 
@@ -151,7 +173,6 @@ class webserv(http.server.BaseHTTPRequestHandler):
 
     #
 #
-
 
 HOST = '127.0.0.1'
 PORT = 50000
