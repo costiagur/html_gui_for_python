@@ -1,7 +1,6 @@
 ui = new Object();
 
-ui.host = 'http://localhost:50000';
-
+ui.host = 'http://localhost:52724'
 //*********************************************************************************** */
 
 ui.submit = function(){ //request can be insert or update
