@@ -1,8 +1,27 @@
 ui = new Object();
 
-ui.host = 'http://localhost:52724'
-//*********************************************************************************** */
+ui.host = 'http://localhost:56600'
 
+//********************************************************************************** */
+window.addEventListener('beforeunload',function(event){ //when closing browser, close python
+    var xhr = new XMLHttpRequest();
+    var fdata = new FormData();
+
+    fdata.append("request",'close'); //prepare files
+
+    xhr.open('POST',ui.host, true);
+
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(xhr.responseText);
+        }
+    };
+    
+    xhr.send(fdata);
+    
+})
+
+//*********************************************************************************** */
 ui.submit = function(){ //request can be insert or update
     var xhr = new XMLHttpRequest();
     var fdata = new FormData();
