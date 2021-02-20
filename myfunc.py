@@ -1,6 +1,7 @@
 import base64
 import json
 
+
 def myfunc(obj,querydict):
 
     print(obj)
