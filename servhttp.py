@@ -13,10 +13,10 @@ PORT = random.randint(50000,60000)
 
 currentfolder =  os.path.dirname(os.path.realpath(__file__))
 
-with open(currentfolder + "/uiclient.js", "r") as jsfile:
+with open(currentfolder + "/uiclient.js", mode="r", encoding="UTF-8") as jsfile:
     existingjs = jsfile.readlines() #read all lines from uiclient,js file
 #
-with open(currentfolder + "/uiclient.js", "w") as jsfile: #insert ui.host in JS file with random PORT num
+with open(currentfolder + "/uiclient.js", mode="w", encoding="UTF-8") as jsfile: #insert ui.host in JS file with random PORT num
     for jsline in existingjs:
         if jsline.find("ui.host = 'http://localhost") != -1: #file existing ui.host line and replace it
             jsfile.write("ui.host = 'http://localhost:%i'\n" %(PORT))
