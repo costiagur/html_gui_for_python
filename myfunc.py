@@ -1,20 +1,26 @@
 import base64
 import json
+import post
 
 
-def myfunc(obj,querydict):
+def myfunc(obj,queryobj):
+
+    postdict = queryobj._POST()
+    filesdict = queryobj._FILES()
 
     print(obj)
 
-    replymsg = base64.b64encode(querydict['doc1'][1])
-                    #insert your reply into this variable. it should not be bytes. Else remove encode() below
+    print("POST = " + str(postdict) + "\n")
+    print("FILES = " + str(filesdict) + "\n")
 
-    filedict = dict()
+    # reply message should be encoded to be sent back to browser ----------------------------------------------
+    # encoding to base64 is used to send ansi hebrew data. it is decoded to become string and put into json.
+    # json is encoded to be sent to browser.
 
-    filedict['filename'] = querydict['doc1'][0]
-    filedict['filetext'] = replymsg.decode()
+    file64enc = base64.b64encode(filesdict['doc1'][1])
+    file64dec = file64enc.decode()
 
-    msg = json.dumps(filedict)
+    replymsg = json.dumps([filesdict['doc1'][0],file64dec]).encode('UTF-8')
 
-    return msg
+    return replymsg
 #
