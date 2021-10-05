@@ -1,6 +1,6 @@
 ui = new Object();
 
-ui.host = 'http://localhost:56600'
+ui.host = 'http://localhost:55437'
 
 //********************************************************************************** */
 window.addEventListener('beforeunload',function(event){ //when closing browser, close python
@@ -40,9 +40,13 @@ ui.submit = function(){ //request can be insert or update
 
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {   
+            console.log(this.responseText)
+            
+            alert(this.responseText)
+
             resobj = JSON.parse(this.responseText);
 
-            ui.download(resobj.filename,resobj.filetext)
+            ui.download(resobj[0],resobj[1])
         }
     }
 
