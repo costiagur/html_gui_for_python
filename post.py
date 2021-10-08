@@ -33,7 +33,7 @@ class POST:
                 if contDisp.find(linesep.encode() + b'Content-Type:') != -1:
                     filename = contDisp[contDisp.find(b'; filename=') + 12 : -len(linesep) + 1 + abs(contDisp.find(linesep.encode() + b'Content-Type:'))]
                 else:
-                    filename = contDisp[contDisp.find(b'; filename=') + 12 : -1 if -len(linesep) + 1 >= 0 else -len(linesep) + 1]
+                    filename = contDisp[contDisp.find(b'; filename=') + 12 : -1]
                 #
 
                 filename = filename.decode()
@@ -43,7 +43,7 @@ class POST:
 
             else:
                 filename = ''
-                paramname = contDisp[contDisp.find(b'; name=') + 8 : -1 if -len(linesep) + 1 >= 0 else -len(linesep) + 1]
+                paramname = contDisp[contDisp.find(b'; name=') + 8 : -1]
                 paramname = paramname.decode()
 
                 contData = contData.decode()

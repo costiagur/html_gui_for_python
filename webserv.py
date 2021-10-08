@@ -50,26 +50,4 @@ class webserv(http.server.BaseHTTPRequestHandler):
 
         return
     #
-
-    def do_GET(self):
-
-        if self.client_address[0] != '127.0.0.1': #check that request comes from local computer
-            return
-        #
-
-        querystr = urllib.parse.parse_qs(self.path[2:],True)
-                    #first is /, second is ?. threfore everything after them
-        
-        #print(querystr) #querystr is dict with the request data. names as keys.
-
-        msg = self.processing(querystr,self.custmethod) #insert your reply into this variable. it should note be bytes. Else remove encode() below
-
-        msgb = msg.encode() #convert to bytes to be sent
-
-        self._set_headers() #set headers of response
-        
-        self.wfile.write(msgb) #send bytes = write to socket
-
-        return
-    #
 #
