@@ -1,6 +1,7 @@
 ui = new Object();
 
-ui.host = 'http://localhost:55437'
+ui.host = 'http://localhost:52512'
+ui.queryobj = 
 
 //********************************************************************************** */
 window.addEventListener('beforeunload',function(event){ //when closing browser, close python
@@ -70,5 +71,21 @@ ui.download = function(filename, filetext){
     a.click();
 
     document.body.removeChild(a);
+
+}
+
+//******************************************************************************************** */
+
+ui.onloadfunc = function(){
+
+    for(key of Object.keys(ui.queryobj)){
+
+        if (document.getElementById(key)){ //if such id doesn't exists, than object will return null which is false
+
+            document.getElementById(key).value = ui.queryobj[key];
+        }
+    }
+
+    ui.submit();
 
 }

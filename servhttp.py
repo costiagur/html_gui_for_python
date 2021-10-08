@@ -7,25 +7,41 @@ import backholder
 import http.server
 import myfunc
 import random
+from sys import argv
 
 HOST = '127.0.0.1'
 PORT = random.randint(50000,60000)
+
+print(argv)
+
+querystr = ''
+
+if len(argv) == 1:
+    pass
+else:
+    querystr = "{" + ",".join(argv[1:]) + "}"
+#
 
 currentfolder =  os.path.dirname(os.path.realpath(__file__))
 
 with open(currentfolder + "/uiclient.js", mode="r", encoding="UTF-8") as jsfile:
     existingjs = jsfile.readlines() #read all lines from uiclient,js file
 #
+
 with open(currentfolder + "/uiclient.js", mode="w", encoding="UTF-8") as jsfile: #insert ui.host in JS file with random PORT num
     for jsline in existingjs:
         if jsline.find("ui.host = 'http://localhost") != -1: #file existing ui.host line and replace it
             jsfile.write("ui.host = 'http://localhost:%i'\n" %(PORT))
+        #
+        elif jsline.find("ui.queryobj =") != -1:
+            jsfile.write("ui.queryobj = " + querystr + "\n")
         #
         else:
             jsfile.write(jsline) #all other lines write what was there
         #
     #
 #
+
 
 htmlfilepath = "file://" + currentfolder + "/index.html"
 
