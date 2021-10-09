@@ -1,9 +1,9 @@
 import webserv
 import webbrowser
-from socketserver import ThreadingMixIn
-import threading
+#from socketserver import ThreadingMixIn
+#import threading
 import os
-import backholder
+#import backholder
 import http.server
 import myfunc
 import random
@@ -45,19 +45,21 @@ with open(currentfolder + "/uiclient.js", mode="w", encoding="UTF-8") as jsfile:
 
 htmlfilepath = "file://" + currentfolder + "/index.html"
 
-class ThreadedHTTPServer(ThreadingMixIn, http.server.HTTPServer):
-    pass
+#class ThreadedHTTPServer(ThreadingMixIn, http.server.HTTPServer):
+#    pass
 #
 
 webbrowser.open(htmlfilepath) #open html file of the UI
 
 webserv.webserv.custmethod = myfunc.myfunc #provide my custom function to POST of webserver
 
-serv = ThreadedHTTPServer((HOST,PORT),webserv.webserv) #threading HTTPserver
+#serv = ThreadedHTTPServer((HOST,PORT),webserv.webserv) #threading HTTPserver
+serv = http.server.HTTPServer((HOST,PORT),webserv.webserv)
 
-server_thread = threading.Thread(target=serv.serve_forever) #preparing thread because tkinter can't run in the same thread with httpserver
-server_thread.start()
+#server_thread = threading.Thread(target=serv.serve_forever) #preparing thread because tkinter can't run in the same thread with httpserver
+#server_thread.start()
+serv.serve_forever()
 
-backholder.holderrun("MyUI") #Run Tkinter to hold the server in the background
+#backholder.holderrun("MyUI") #Run Tkinter to hold the server in the background
 
 serv.shutdown()

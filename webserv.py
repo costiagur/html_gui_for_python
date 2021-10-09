@@ -1,7 +1,7 @@
 import http.server
-import urllib
-import backholder
+#import backholder
 import post
+from sys import exit
 
 class webserv(http.server.BaseHTTPRequestHandler):
 
@@ -11,7 +11,8 @@ class webserv(http.server.BaseHTTPRequestHandler):
 
         if('request' in postlist.keys()):
             if postlist['request'] == 'close':
-                backholder.holderclose()
+                #backholder.holderclose()
+                exit()
             #
         #
         

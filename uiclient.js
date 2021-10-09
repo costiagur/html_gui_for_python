@@ -1,6 +1,6 @@
 ui = new Object();
 
-ui.host = 'http://localhost:52512'
+ui.host = 'http://localhost:50602'
 ui.queryobj = 
 
 //********************************************************************************** */
