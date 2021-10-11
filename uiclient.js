@@ -22,6 +22,21 @@ window.addEventListener('beforeunload',function(event){ //when closing browser, 
     
 })
 
+//******************************************************************************************** */
+
+window.addEventListener('onload',function(event){
+
+    for(key of Object.keys(ui.queryobj)){
+
+        if (document.getElementById(key)){ //if such id doesn't exists, than object will return null which is false
+
+            document.getElementById(key).value = ui.queryobj[key];
+        }
+    }
+
+    ui.submit();
+
+})
 //*********************************************************************************** */
 ui.submit = function(){ //request can be insert or update
     var xhr = new XMLHttpRequest();
@@ -74,18 +89,4 @@ ui.download = function(filename, filetext){
 
 }
 
-//******************************************************************************************** */
 
-ui.onloadfunc = function(){
-
-    for(key of Object.keys(ui.queryobj)){
-
-        if (document.getElementById(key)){ //if such id doesn't exists, than object will return null which is false
-
-            document.getElementById(key).value = ui.queryobj[key];
-        }
-    }
-
-    ui.submit();
-
-}
