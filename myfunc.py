@@ -1,14 +1,11 @@
 import base64
 import json
-import post
 
 
-def myfunc(obj,queryobj):
+def myfunc(queryobj):
 
     postdict = queryobj._POST()
     filesdict = queryobj._FILES()
-
-    print(obj)
 
     print("POST = " + str(postdict) + "\n")
     print("FILES = " + str(filesdict) + "\n")
