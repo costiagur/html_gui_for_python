@@ -10,8 +10,9 @@ class Handler(http.server.BaseHTTPRequestHandler):
         
     #
 
-    def setnewport(self,newPORT):
+    def setnewport(self,newPORT,querystr):
         self.newPORT = newPORT
+        self.querystr = querystr
     #
 
     def customfunc(self,funcobj):
@@ -29,7 +30,9 @@ class Handler(http.server.BaseHTTPRequestHandler):
             elif postlist['request'] == self.CODESTR:
                 Handler.REPLIYED = 1 #this class is never initiated. therefore using here self doesn't update the value of self.REPLIYED in the setcodeword() and isrepliyed(). instead using specifically the name of the class
 
-                return str(self.newPORT).encode()
+                returnstr = '{"port":' + str(self.newPORT) + ', "args":' + self.querystr + '}'
+
+                return returnstr.encode()
         #
 
         return Handler.funcobj(queryobj)
@@ -71,7 +74,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
 #
 
 class HttpServer(http.server.HTTPServer):
-    def __init__(self,address_tuple,useHandler,codestr,newPORT,funcobj):
+    def __init__(self,address_tuple,useHandler,codestr,newPORT,funcobj,querystr):
         
         self.address_tuple = address_tuple
         self.useHandler = useHandler
@@ -79,7 +82,7 @@ class HttpServer(http.server.HTTPServer):
         super().__init__(self.address_tuple,self.useHandler)
         
         useHandler.setcodeword(useHandler,codestr)
-        useHandler.setnewport(useHandler,newPORT)
+        useHandler.setnewport(useHandler,newPORT,querystr)
         useHandler.customfunc(useHandler,funcobj)
     #
 
