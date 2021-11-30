@@ -1,17 +1,21 @@
 import http.server
 import post
 from sys import exit
-from myfunc import myfunc
 
 
 class Handler(http.server.BaseHTTPRequestHandler):
     def setcodeword(self, codestr):
         self.CODESTR = codestr
         self.REPLIYED = 0
+        
     #
 
     def setnewport(self,newPORT):
         self.newPORT = newPORT
+    #
+
+    def customfunc(self,funcobj):
+        self.funcobj = funcobj
     #
 
     def processing(self,queryobj):
@@ -22,12 +26,13 @@ class Handler(http.server.BaseHTTPRequestHandler):
             if postlist['request'] == 'close':
                 exit()
             #
-            elif postlist['request'] == self.CODESTR: 
-                self.REPLIYED = 1
+            elif postlist['request'] == self.CODESTR:
+                Handler.REPLIYED = 1 #this class is never initiated. therefore using here self doesn't update the value of self.REPLIYED in the setcodeword() and isrepliyed(). instead using specifically the name of the class
+
                 return str(self.newPORT).encode()
         #
 
-        return myfunc(queryobj)
+        return Handler.funcobj(queryobj)
     #
 
     def set_headers(self):
@@ -59,13 +64,14 @@ class Handler(http.server.BaseHTTPRequestHandler):
         return
     #
 
-    def isrepliyed(self):
-        return self.REPLIYED
+    def isrepliyed(self): #replyes that we the codeword was recieved and answered (repliyed) and we can change the port to new one.
+        return self.REPLIYED 
+
     #
 #
 
 class HttpServer(http.server.HTTPServer):
-    def __init__(self,address_tuple,useHandler,codestr,newPORT):
+    def __init__(self,address_tuple,useHandler,codestr,newPORT,funcobj):
         
         self.address_tuple = address_tuple
         self.useHandler = useHandler
@@ -74,11 +80,12 @@ class HttpServer(http.server.HTTPServer):
         
         useHandler.setcodeword(useHandler,codestr)
         useHandler.setnewport(useHandler,newPORT)
+        useHandler.customfunc(useHandler,funcobj)
     #
 
     def run_once(self):      
         self.handle_request()
-        return self.useHandler.isrepliyed(self.useHandler)
+        return self.useHandler.isrepliyed(self.useHandler) #Handler class is never initiated. no __init__(). therefore, need to provide class to self. 
     #
     
     def close(self):
