@@ -9,8 +9,10 @@ Python modules are:
 4. myfunc.py - Developers custom function. the process that the app is supposed to do. Developer is free to change its name and the module's name, provided that he changes these names in file serhttp.py too.
 
 Javascript file:
-uiclient.js - includes the intial port number 50000, onloadfunc method to intiate connection and window.addEventListener('beforeunload') to send the close request to server.
+- uiclient.js - includes the intial port number 50000, onloadfunc method to intiate connection and window.addEventListener('beforeunload') to send the close request to server.
 other methods are customizable by the developer.
-The connection if performed the as this way: browser connects server on initial port 50000. It sands a code word, which may simply be the name of the application. it is used only to distinguish this call from other apps calls. When server receives the code word, it chooses a random number between 50000 and 60000 which will serve as new port. it passes this random number to the browser. Javascript code sets this number as a new port for future connections. Server too sets the new port for future connections. From now on and until the browser is closed, they talk to each other on a new port. When Browser is closed it sends a last request "close". server receives it and quits python.
+
+Method of connection:
+- The connection if performed the as this way: browser connects server on initial port 50000. It sands a code word, which may simply be the name of the application. it is used only to distinguish this call from other apps calls. When server receives the code word, it chooses a random number between 50000 and 60000 which will serve as new port. it passes this random number to the browser. Javascript code sets this number as a new port for future connections. Server too sets the new port for future connections. From now on and until the browser is closed, they talk to each other on a new port. When Browser is closed it sends a last request "close". server receives it and quits python.
 
 TODO: load app with argumets from cmd command. 
