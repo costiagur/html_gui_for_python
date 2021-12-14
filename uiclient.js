@@ -20,7 +20,10 @@ window.addEventListener('beforeunload',function(event){ //when closing browser, 
     xhr.send(fdata);
     
 })
-
+//********************************************************************************** */
+window.addEventListener('load',function(event){
+    ui.onloadfunc()
+})
 //******************************************************************************************** */
 
 ui.onloadfunc = function(){
