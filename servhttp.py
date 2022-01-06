@@ -3,6 +3,7 @@ import webbrowser
 import os
 from sys import argv
 import random
+import ctypes
 from myfunc import myfunc
 
 HOST = '127.0.0.1'
@@ -28,6 +29,8 @@ else:
 #
 
 currentfolder =  os.path.dirname(os.path.realpath(__file__))
+
+ctypes.windll.user32.ShowWindow( ctypes.windll.kernel32.GetConsoleWindow(), 0)
 
 htmlfilepath = "file://" + currentfolder + "/index.html"
 
