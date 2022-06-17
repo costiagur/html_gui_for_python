@@ -13,7 +13,7 @@ Javascript file:
 other methods are customizable by the developer.
 
 Method of connection:
-- The connection if performed the as this way: browser connects server on initial port 50000. It sands a code word, which may simply be the name of the application. it is used only to distinguish this call from other apps calls. When server receives the code word, it chooses a random number between 50000 and 60000 which will serve as new port. it passes this random number to the browser. Javascript code sets this number as a new port for future connections. Server too sets the new port for future connections. From now on and until the browser is closed, they talk to each other on a new port. When Browser is closed it sends a last request "close". server receives it and quits python.
+- Browser connects python http server on initial port 50000. To be able to activate several different connection, browser sends a code word, which may simply be the name of the application. When server receives the code word, it chooses a random number between 50000 and 60000 which will serve as a new port number. Server passes this random number to the browser. Javascript code sets this number as a new port for future connections. Server too sets it as the new port for future connections. From now on and until the browser is closed, they connect each other on the new port. When the browser is closed it sends a last request "close". The Server receives it and quits python.
 
 Arguments:
 - servhttp.py can be started with command line arguments written like (html element id):value (html element id):value and so on. Javascript will try to find elements with such ids and set their values to respective values from arguments line.
