@@ -9,7 +9,7 @@ from myfunc import myfunc
 HOST = '127.0.0.1'
 iniPORT = 50000
 newPORT = random.randint(50000,60000)
-CODESTR = "shirlimirli"
+CODESTR = "myhtmlgiu"
 runningport = iniPORT
 isrepliyed = 0
 
