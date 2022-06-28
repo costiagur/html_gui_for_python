@@ -31,7 +31,7 @@ ui.onloadfunc = function(){
     var xhr = new XMLHttpRequest();
     var fdata = new FormData();
 
-    fdata.append("request",'shirlimirli'); //parol
+    fdata.append("request",'myhtmlgiu'); //parol
 
     xhr.open('POST',"http://localhost:"+ui.port, true);
 
