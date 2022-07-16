@@ -5,44 +5,58 @@ from sys import argv
 import random
 import ctypes
 from myfunc import myfunc
+from tkinter import messagebox
+from platform import system
 
-HOST = '127.0.0.1'
-iniPORT = 50000
-newPORT = random.randint(50000,60000)
-CODESTR = "myhtmlgiu"
-runningport = iniPORT
-isrepliyed = 0
+def main():
+    HOST = '127.0.0.1'
+    iniPORT = 50000
+    newPORT = random.randint(50000,60000)
+    CODESTR = "myhtmlgiu"
+    #runningport = iniPORT
+    isrepliyed = 0
 
-print(argv)
+    print(argv)
 
-if len(argv) == 1:
-    querystr = 'null'
-else:
-    arglist = []
+    try:
+        if len(argv) == 1:
+            querystr = 'null'
+        else:
+            arglist = []
 
-    for eacharg in argv[1:]:
-        argarr = eacharg.split(":")
-        arglist.append('"' + str(argarr[0]) + '":"' + str(argarr[1]) + '"')
+            for eacharg in argv[1:]:
+                argarr = eacharg.split(":")
+                arglist.append('"' + str(argarr[0]) + '":"' + str(argarr[1]) + '"')
+            #
+
+            querystr = "{" + ",".join(arglist) + "}"
+        #
+
+        currentfolder =  os.path.dirname(os.path.realpath(__file__))
+
+        if system() == 'Windows':
+            ctypes.windll.user32.ShowWindow( ctypes.windll.kernel32.GetConsoleWindow(), 0)
+        #
+
+        htmlfilepath = "file://" + currentfolder + "/index.html"
+
+        webbrowser.open(htmlfilepath) #open html file of the UI
+
+        serv = webserv.HttpServer((HOST,iniPORT),webserv.Handler,CODESTR,newPORT,myfunc,querystr)
+
+        while isrepliyed == 0:
+            isrepliyed = serv.run_once()
+        #
+
+        serv.close()
+        serv = webserv.HttpServer((HOST,newPORT),webserv.Handler,'',newPORT,myfunc,querystr)
+        serv.run_continuously()
     #
-
-    querystr = "{" + ",".join(arglist) + "}"
+    except Exception as e:
+        messagebox.showerror("Main", e)
+    #
 #
 
-currentfolder =  os.path.dirname(os.path.realpath(__file__))
-
-ctypes.windll.user32.ShowWindow( ctypes.windll.kernel32.GetConsoleWindow(), 0)
-
-htmlfilepath = "file://" + currentfolder + "/index.html"
-
-webbrowser.open(htmlfilepath) #open html file of the UI
-
-serv = webserv.HttpServer((HOST,iniPORT),webserv.Handler,CODESTR,newPORT,myfunc,querystr)
-
-while isrepliyed == 0:
-    isrepliyed = serv.run_once()
+if __name__ == "__main__":
+    main()
 #
-
-serv.close()
-serv = webserv.HttpServer((HOST,newPORT),webserv.Handler,'',newPORT,myfunc,querystr)
-serv.run_continuously()
-

@@ -79,12 +79,15 @@ ui.submit = function(){ //request can be insert or update
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {   
             console.log(this.responseText)
-            
-            alert(this.responseText)
 
             resobj = JSON.parse(this.responseText);
 
-            ui.download(resobj[0],resobj[1])
+            if (resobj[0] == "Error"){
+                alert(resobj[1])
+            }
+            else{
+                ui.download(resobj[0],resobj[1])
+            }
         }
     }
 
