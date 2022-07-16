@@ -1,4 +1,5 @@
 import http.server
+from tkinter import messagebox
 import post
 from sys import exit
 
@@ -12,7 +13,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
 
     def setnewport(self,newPORT,querystr):
         self.newPORT = newPORT
-        self.querystr = querystr
+        self.querystr = querystr       
     #
 
     def customfunc(self,funcobj):
@@ -20,22 +21,26 @@ class Handler(http.server.BaseHTTPRequestHandler):
     #
 
     def processing(self,queryobj):
-        
-        postlist = queryobj._POST()
+        try:        
+            postlist = queryobj._POST()
 
-        if('request' in postlist.keys()):
-            if postlist['request'] == 'close':
-                exit()
+            if('request' in postlist.keys()):
+                if postlist['request'] == 'close':
+                    exit()
+                #
+                elif postlist['request'] == self.CODESTR:
+                    Handler.REPLIYED = 1 #this class is never initiated. therefore using here self doesn't update the value of self.REPLIYED in the setcodeword() and isrepliyed(). instead using specifically the name of the class
+
+                    returnstr = '{"port":' + str(self.newPORT) + ', "args":' + self.querystr + '}'
+
+                    return returnstr.encode()
             #
-            elif postlist['request'] == self.CODESTR:
-                Handler.REPLIYED = 1 #this class is never initiated. therefore using here self doesn't update the value of self.REPLIYED in the setcodeword() and isrepliyed(). instead using specifically the name of the class
 
-                returnstr = '{"port":' + str(self.newPORT) + ', "args":' + self.querystr + '}'
-
-                return returnstr.encode()
+            return Handler.funcobj(queryobj)
         #
-
-        return Handler.funcobj(queryobj)
+        except Exception as e:
+            messagebox.showerror("webserv-Handler class",e)
+        #
     #
 
     def set_headers(self):
@@ -67,7 +72,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
         return
     #
 
-    def isrepliyed(self): #replyes that we the codeword was recieved and answered (repliyed) and we can change the port to new one.
+    def isrepliyed(self): #replyes that the codeword was recieved and answered (repliyed) and it can change the port to new one.
         return self.REPLIYED 
 
     #
@@ -87,8 +92,13 @@ class HttpServer(http.server.HTTPServer):
     #
 
     def run_once(self):      
-        self.handle_request()
-        return self.useHandler.isrepliyed(self.useHandler) #Handler class is never initiated. no __init__(). therefore, need to provide class to self. 
+        try:
+            self.handle_request()
+            return self.useHandler.isrepliyed(self.useHandler) #Handler class is never initiated. no __init__(). therefore, need to provide class to self. 
+        #
+        except Exception as e:
+            messagebox.showerror("webserv - Httpserver", e)
+        #
     #
     
     def close(self):
