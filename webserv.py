@@ -1,5 +1,5 @@
 import http.server
-from tkinter import messagebox
+import common
 import post
 from sys import exit
 
@@ -39,7 +39,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
             return Handler.funcobj(queryobj)
         #
         except Exception as e:
-            messagebox.showerror("webserv-Handler class",e)
+            common.errormsg(title=__name__ + "_processing",message=e)
         #
     #
 
@@ -97,7 +97,7 @@ class HttpServer(http.server.HTTPServer):
             return self.useHandler.isrepliyed(self.useHandler) #Handler class is never initiated. no __init__(). therefore, need to provide class to self. 
         #
         except Exception as e:
-            messagebox.showerror("webserv - Httpserver", e)
+            common.errormsg(title=__name__ + "_HttpServer",message=e)
         #
     #
     

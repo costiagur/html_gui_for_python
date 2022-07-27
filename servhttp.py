@@ -5,15 +5,17 @@ from sys import argv
 import random
 import ctypes
 from myfunc import myfunc
-from tkinter import messagebox
+import common
 from platform import system
 
 def main():
+
+    common.intiate()
+
     HOST = '127.0.0.1'
     iniPORT = 50000
     newPORT = random.randint(50000,60000)
     CODESTR = "myhtmlgiu"
-    #runningport = iniPORT
     isrepliyed = 0
 
     print(argv)
@@ -35,7 +37,7 @@ def main():
         currentfolder =  os.path.dirname(os.path.realpath(__file__))
 
         if system() == 'Windows':
-            ctypes.windll.user32.ShowWindow( ctypes.windll.kernel32.GetConsoleWindow(), 0)
+            ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
         #
 
         htmlfilepath = "file://" + currentfolder + "/index.html"
@@ -53,8 +55,14 @@ def main():
         serv.run_continuously()
     #
     except Exception as e:
-        messagebox.showerror("Main", e)
+        common.errormsg(title=__name__,message=e)
     #
+
+    finally:
+        common.root.destroy()
+    #
+
+    common.root.mainloop()
 #
 
 if __name__ == "__main__":
