@@ -4,7 +4,7 @@ import os
 from sys import argv
 import random
 import ctypes
-from myfunc import myfunc
+from myfunc import myfunc,CODESTR
 import common
 from platform import system
 
@@ -15,7 +15,6 @@ def main():
     HOST = '127.0.0.1'
     iniPORT = 50000
     newPORT = random.randint(50000,60000)
-    CODESTR = "myhtmlgiu"
     isrepliyed = 0
 
     print(argv)
