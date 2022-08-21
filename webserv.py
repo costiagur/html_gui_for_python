@@ -28,7 +28,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
                     exit()
                 #
                 elif postlist['request'] == self.CODESTR:
-                    common.REPLIYED = 1
+                    common.replyed = 1
 
                     returnstr = '{"port":' + str(self.newPORT) + ', "args":' + self.querystr + '}'
 
