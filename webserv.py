@@ -7,7 +7,7 @@ from sys import exit
 class Handler(http.server.BaseHTTPRequestHandler):
     def setcodeword(self, codestr):
         self.CODESTR = codestr
-        self.REPLIYED = 0
+        Handler.REPLIYED = 0
         
     #
 
