@@ -2,6 +2,8 @@ import tkinter
 from tkinter import messagebox
 from tkinter import filedialog
 
+replyed = 0
+
 def intiate():
     global root
     root = tkinter.Tk()
