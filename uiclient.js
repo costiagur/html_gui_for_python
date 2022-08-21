@@ -31,7 +31,7 @@ ui.onloadfunc = function(){
     var xhr = new XMLHttpRequest();
     var fdata = new FormData();
 
-    codeword = document.getElementsByTagName("body").dataset.codeword
+    codeword = document.getElementsByTagName("body")[0].dataset.codeword
 
     fdata.append("request",codeword); //parol
 
