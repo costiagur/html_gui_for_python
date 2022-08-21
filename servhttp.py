@@ -15,7 +15,6 @@ def main():
     HOST = '127.0.0.1'
     iniPORT = 50000
     newPORT = random.randint(50000,60000)
-    isrepliyed = 0
 
     print(argv)
 
@@ -45,8 +44,8 @@ def main():
 
         serv = webserv.HttpServer((HOST,iniPORT),webserv.Handler,CODESTR,newPORT,myfunc,querystr)
 
-        while isrepliyed == 0:
-            isrepliyed = serv.run_once()
+        while common.REPLYED == 0:
+            serv.run_once()
         #
 
         serv.close()
