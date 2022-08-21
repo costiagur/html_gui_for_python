@@ -44,7 +44,7 @@ def main():
 
         serv = webserv.HttpServer((HOST,iniPORT),webserv.Handler,CODESTR,newPORT,myfunc,querystr)
 
-        while common.REPLYED == 0:
+        while common.replyed == 0:
             serv.run_once()
         #
 
