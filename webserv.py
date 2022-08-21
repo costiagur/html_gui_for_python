@@ -6,9 +6,7 @@ from sys import exit
 
 class Handler(http.server.BaseHTTPRequestHandler):
     def setcodeword(self, codestr):
-        self.CODESTR = codestr
-        Handler.REPLIYED = 0
-        
+        self.CODESTR = codestr        
     #
 
     def setnewport(self,newPORT,querystr):
@@ -23,13 +21,14 @@ class Handler(http.server.BaseHTTPRequestHandler):
     def processing(self,queryobj):
         try:        
             postlist = queryobj._POST()
+            print(postlist)
 
             if('request' in postlist.keys()):
                 if postlist['request'] == 'close':
                     exit()
                 #
                 elif postlist['request'] == self.CODESTR:
-                    Handler.REPLIYED = 1 #this class is never initiated. therefore using here self doesn't update the value of self.REPLIYED in the setcodeword() and isrepliyed(). instead using specifically the name of the class
+                    common.REPLIYED = 1
 
                     returnstr = '{"port":' + str(self.newPORT) + ', "args":' + self.querystr + '}'
 
@@ -71,11 +70,6 @@ class Handler(http.server.BaseHTTPRequestHandler):
 
         return
     #
-
-    def isrepliyed(self): #replyes that the codeword was recieved and answered (repliyed) and it can change the port to new one.
-        return self.REPLIYED 
-
-    #
 #
 
 class HttpServer(http.server.HTTPServer):
@@ -94,7 +88,6 @@ class HttpServer(http.server.HTTPServer):
     def run_once(self):      
         try:
             self.handle_request()
-            return self.useHandler.isrepliyed(self.useHandler) #Handler class is never initiated. no __init__(). therefore, need to provide class to self. 
         #
         except Exception as e:
             common.errormsg(title=__name__ + "_HttpServer",message=e)
