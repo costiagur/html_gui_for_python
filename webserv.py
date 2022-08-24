@@ -2,20 +2,14 @@ import http.server
 import common
 import post
 from sys import exit
+import myfunc
 
 
 class Handler(http.server.BaseHTTPRequestHandler):
-    def setcodeword(self, codestr):
-        self.CODESTR = codestr        
-    #
 
     def setnewport(self,newPORT,querystr):
         self.newPORT = newPORT
         self.querystr = querystr       
-    #
-
-    def customfunc(self,funcobj):
-        self.funcobj = funcobj
     #
 
     def processing(self,queryobj):
@@ -27,7 +21,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
                 if postlist['request'] == 'close':
                     exit()
                 #
-                elif postlist['request'] == self.CODESTR:
+                elif postlist['request'] == myfunc.CODESTR:
                     common.replyed = 1
 
                     returnstr = '{"port":' + str(self.newPORT) + ', "args":' + self.querystr + '}'
@@ -35,7 +29,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
                     return returnstr.encode()
             #
 
-            return Handler.funcobj(queryobj)
+            return myfunc.myfunc(queryobj)
         #
         except Exception as e:
             common.errormsg(title=__name__ + "_processing",message=e)
@@ -73,16 +67,14 @@ class Handler(http.server.BaseHTTPRequestHandler):
 #
 
 class HttpServer(http.server.HTTPServer):
-    def __init__(self,address_tuple,useHandler,codestr,newPORT,funcobj,querystr):
+    def __init__(self,address_tuple,useHandler,newPORT,querystr):
         
         self.address_tuple = address_tuple
         self.useHandler = useHandler
 
         super().__init__(self.address_tuple,self.useHandler)
         
-        useHandler.setcodeword(useHandler,codestr)
         useHandler.setnewport(useHandler,newPORT,querystr)
-        useHandler.customfunc(useHandler,funcobj)
     #
 
     def run_once(self):      
