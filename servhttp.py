@@ -4,7 +4,6 @@ import os
 from sys import argv
 import random
 import ctypes
-from myfunc import myfunc,CODESTR
 import common
 from platform import system
 
@@ -42,14 +41,14 @@ def main():
 
         webbrowser.open(htmlfilepath) #open html file of the UI
 
-        serv = webserv.HttpServer((HOST,iniPORT),webserv.Handler,CODESTR,newPORT,myfunc,querystr)
+        serv = webserv.HttpServer((HOST,iniPORT),webserv.Handler,newPORT,querystr)
 
         while common.replyed == 0:
             serv.run_once()
         #
 
         serv.close()
-        serv = webserv.HttpServer((HOST,newPORT),webserv.Handler,'',newPORT,myfunc,querystr)
+        serv = webserv.HttpServer((HOST,newPORT),webserv.Handler,newPORT,querystr)
         serv.run_continuously()
     #
     except Exception as e:
