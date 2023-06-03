@@ -30,6 +30,9 @@ myfunc.submit = function(){ //request can be insert or update
                 myfunc.download(resobj[0],resobj[1])
             }
         }
+        else if (this.readyState == 4 && this.status != 200){
+            alert(this.responseText)
+        }
     }
 
     xhr.send(fdata);     
