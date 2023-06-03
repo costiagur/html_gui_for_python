@@ -15,6 +15,9 @@ window.addEventListener('beforeunload',function(event){ //when closing browser, 
         if (this.readyState == 4 && this.status == 200) {
             console.log(xhr.responseText);
         }
+        else if (this.readyState == 4 && this.status != 200){
+            alert(this.responseText)
+        }
     };
     
     xhr.send(fdata);
@@ -55,6 +58,9 @@ ui.onloadfunc = function(){
                     }
                 }           
             }
+        }
+        else if (this.readyState == 4 && this.status != 200){
+            alert(this.responseText)
         }
     };
     
