@@ -1,6 +1,7 @@
 import tkinter
 from tkinter import messagebox
 from tkinter import filedialog
+from tkinter import simpledialog
 
 replyed = 0
 
@@ -21,6 +22,13 @@ def infomsg(title,message):
     root.deiconify()
     messagebox.showinfo(title=title, message=message)
     root.withdraw()
+#
+
+def inputmsg(title,prompt):
+    root.deiconify()
+    res = simpledialog.askinteger(title=title,prompt=prompt)
+    root.withdraw()
+    return res
 #
 
 def pointtodir(title): #in case of direct intaraction with folders
