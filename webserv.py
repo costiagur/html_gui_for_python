@@ -18,15 +18,27 @@ class Handler(http.server.BaseHTTPRequestHandler):
             print(postlist)
 
             if('request' in postlist.keys()):
-                if postlist['request'] == 'close':
-                    exit()
+                thisrequest = postlist['request']
+
+                if thisrequest == 'close':
+                    common.close = True
+                    print('request to close')
+                    #exit()
                 #
-                elif postlist['request'] == myfunc.CODESTR:
-                    common.replyed = 1
+                elif "uiportcodeword" in thisrequest:
+                    print("requesting codeword")
 
-                    returnstr = '{"port":' + str(self.newPORT) + ', "args":' + self.querystr + '}'
-
-                    return returnstr.encode()
+                    if thisrequest.removeprefix("uiportcodeword=") == myfunc.CODESTR:
+                        common.replyed = 1
+                        returnstr = '{"port":' + str(self.newPORT) + ', "args":' + self.querystr + '}'
+                        return returnstr.encode()
+                    #
+                    else:
+                        common.replyed = 0
+                        returnstr = '{"port":-1}'
+                        return returnstr.encode()
+                    #
+                #
             #
 
             return myfunc.myfunc(queryobj)
@@ -40,9 +52,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
         self.send_response(200) 
         self.send_header('Content-Type', 'text/html')
         
-        self.send_header('Access-Control-Allow-Origin', 
-                        self.headers['Origin']
-                        ) #local file sends origin header 'null'. 
+        self.send_header('Access-Control-Allow-Origin',self.headers['Origin']) #local file sends origin header 'null'. 
         
         self.send_header('Vary','Origin')
         self.end_headers()
