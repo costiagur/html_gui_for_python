@@ -1,6 +1,7 @@
 ui = new Object();
 
 ui.port = 50000
+ui.reccount = 10
 
 //********************************************************************************** */
 window.addEventListener('beforeunload',function(event){ //when closing browser, close python
@@ -36,7 +37,7 @@ ui.onloadfunc = function(){
 
     codeword = document.getElementsByTagName("body")[0].dataset.codeword
 
-    fdata.append("request",codeword); //parol
+    fdata.append("request","uiportcodeword=" + codeword); //parol
 
     xhr.open('POST',"http://localhost:"+ui.port, true);
 
@@ -45,8 +46,17 @@ ui.onloadfunc = function(){
             console.log(xhr.responseText);
 
             res = JSON.parse(xhr.responseText);
-
-            ui.port = res.port;
+            
+            if (res.port > 50000 ){
+                ui.port = res.port;
+            }
+            else if (res.port == -1){
+                if (ui.reccount >= 0){
+                    ui.reccount = ui.reccount -1
+                    ui.onloadfunc()
+                    console.log("trying again")
+                }                
+            }
 
             if(res.args != null){
 
@@ -61,6 +71,11 @@ ui.onloadfunc = function(){
         }
         else if (this.readyState == 4 && this.status != 200){
             alert(this.responseText)
+            if (ui.reccount >= 0){
+                ui.reccount = ui.reccount -1
+                ui.onloadfunc()
+                console.log("trying again")
+            }  
         }
     };
     

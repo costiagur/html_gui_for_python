@@ -44,12 +44,18 @@ def main():
         serv = webserv.HttpServer((HOST,iniPORT),webserv.Handler,newPORT,querystr)
 
         while common.replyed == 0:
+            print("trying connection")
             serv.run_once()
         #
 
         serv.close()
         serv = webserv.HttpServer((HOST,newPORT),webserv.Handler,newPORT,querystr)
-        serv.run_continuously()
+        
+        while common.close == False:
+            serv.run_once()
+        #
+        print("Closing")
+        serv.close()
     #
     except Exception as e:
         common.errormsg(title=__name__,message=e)
