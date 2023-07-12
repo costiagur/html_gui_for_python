@@ -4,9 +4,11 @@ ui.port = 50000
 ui.reccount = 10
 
 //********************************************************************************** */
-window.addEventListener('beforeunload',function(event){ //when closing browser, close python
+window.addEventListener('beforeunload',function(event){ //when closing browser, close python  
     var xhr = new XMLHttpRequest();
     var fdata = new FormData();
+
+    event.preventDefault()
 
     fdata.append("request",'close'); //prepare files
 
@@ -15,6 +17,7 @@ window.addEventListener('beforeunload',function(event){ //when closing browser, 
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             console.log(xhr.responseText);
+            window.close()
         }
         else if (this.readyState == 4 && this.status != 200){
             alert(this.responseText)
