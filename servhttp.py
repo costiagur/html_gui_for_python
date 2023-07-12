@@ -44,8 +44,14 @@ def main():
         serv = webserv.HttpServer((HOST,iniPORT),webserv.Handler,newPORT,querystr)
 
         while common.replyed == 0:
-            print("trying connection")
-            serv.run_once()
+            if common.close == False:
+                print("trying connection")
+                serv.run_once()
+            
+            elif common.close == True: #in case connection wasn't established and browser was closed
+                serv.close()
+                return
+            #
         #
 
         serv.close()
