@@ -1,6 +1,6 @@
 # HTML_gui_for_python
 The project is a framework for coding UI using the regular HTML5 instruments. Browser contacts python local webserver and the operation is performed by python. 
-Data is passed from browser to python using multipart POST requests. User can pass both data and files to python server. The same can be returned back to the browser.
+Data are passed from browser to python using multipart POST requests. User can pass both data and files to python server. The same can be returned back to the browser.
 
 ## Python modules are: 
 1. main.py serves as main. It shouldn't be changed.
