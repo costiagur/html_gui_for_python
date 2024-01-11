@@ -9,6 +9,12 @@
   </head>
 
   <body data-codeword="myhtmlgiu">
+    <dialog id="msg_dg">
+      <fieldset><strong><legend id="msg_title"></strong></legend>
+        <p id="msg_txt"></p>
+        <button onclick="msg_dg.close();msg_txt.innerHTML = '';msg_title.innerHTML =''" class="w3-button w3-border w3-round">Close</button>
+    </fieldset>
+    </dialog>
     <div class="w3-container">
       <p>
         <input type="text" id="in1" class="w3-input">
