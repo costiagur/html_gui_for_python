@@ -3,7 +3,7 @@ The project is a framework for coding UI using the regular HTML5 instruments. Br
 Data is passed from browser to python using multipart POST requests. User can pass both data and files to python server. The same can be returned back to the browser.
 
 ## Python modules are: 
-1. servhttp.py which serves as main. It shouldn't be changed.
+1. main.py serves as main. It shouldn't be changed.
 2. webserv.py which holdes the code related to the webserver operation. It shouldn't be changed.
 3. post.py which parses multipart post requests and returns methos _POST() and _FILES() alike PHP $_POST[] and $_FILE[]. These are dictionaries, where _POST() provides dictionary of key (the variable name provided in post request) and value. _FILES() provides dictionary with keys, like the former, and values are a list of file names and files. It shouldn't be changed.
 4. common.py which holds functions and keywords common to other files in the project.It should not be changed.
