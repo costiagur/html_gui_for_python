@@ -14,11 +14,19 @@ def myfunc(queryobj):
 
         replymsg = ""
 
-        if postdict["request"] == "num1":
-            res = postdict["in1"]
-            replymsg = json.dumps(["Reply",res]).encode('UTF-8')
+        if postdict["request"] == "in1":
+            res = "In1-{}".format(postdict["in1"])
+            replymsg = json.dumps([postdict["request"],res]).encode('UTF-8')
         #
-        elif postdict["request"] == "file1":
+        elif postdict["request"] == "in2":
+            res = "In2-{}".format(postdict["in2"])
+            replymsg = json.dumps([postdict["request"],res]).encode('UTF-8')
+        #
+        elif postdict["request"] == "in3":
+            res = "In3-{}".format(postdict["in3"])
+            replymsg = json.dumps([postdict["request"],res]).encode('UTF-8')
+        #
+        elif postdict["request"] == "doc1":
 
             # reply message should be encoded to be sent back to browser ----------------------------------------------
             # encoding to base64 is used to send ansi hebrew data. it is decoded to become string and put into json.
@@ -34,7 +42,7 @@ def myfunc(queryobj):
                 replymsg = json.dumps(["Error","No file provided"]).encode('UTF-8')
             #
         #
-                
+        print(replymsg)    
         return replymsg
     #
     

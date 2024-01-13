@@ -15,30 +15,34 @@
         <button onclick="msg_dg.close();msg_txt.innerHTML = '';msg_title.innerHTML =''" class="w3-button w3-border w3-round">Close</button>
     </fieldset>
     </dialog>
+    <dialog id="response_dg">
+      <fieldset><strong><legend>Responses</strong></legend>
+        <p name="inres" id="in1_res"></p>
+        <p name="inres" id="in2_res"></p>
+        <p name="inres" id="in3_res"></p>
+        <button onclick="myfunc.resp_close()" class="w3-button w3-border w3-round">Close</button>
+      </fieldset>
+    </dialog>
     <div class="w3-container">
       <p>
+        <label for="in1">in1</label>
         <input type="text" id="in1" class="w3-input">
       </p>
       <p>
+        <label for="in2">in2</label>
         <input type="text" id="in2" class="w3-input">
       </p>
+      <p>
+        <label for="in3">in3</label>
+        <input type="text" id="in3" class="w3-input">
+      </p>
     <div class="w3-container">
-      <p>Select1:
+      <p><label for="doc1">file 1</label>
         <input type="file" id="doc1" class="w3-input"></p>
     </div>
     <br/>
     <div class="w3-container">
-      <p>Select2:
-        <input type="file" id="doc2" class="w3-input"></p>
-    </div>
-    <br>
-    <div class="w3-container">
-      <p>Select3:
-        <input type="file" id="doc3" class="w3-input"></p>
-    </div>
-    <br>
-    <div class="w3-container">
-      <input type="button" onclick='myfunc.submit()' class="w3-btn w3-round w3-light-grey" value="Parse to files">
+      <button onclick='myfunc.submit()' class="w3-btn w3-round w3-light-grey">Submit</button>
     </div>
     
   </body>
