@@ -48,7 +48,7 @@ def myfunc(queryobj):
     
     except Exception as e:
         common.errormsg(title=__name__,message=e)
-        replymsg = json.dumps(["Error","myfunc -" + str(e)]).encode('UTF-8')
+        replymsg = json.dumps(["Error",__name__+" -" + str(e)]).encode('UTF-8')
         return replymsg
     #
 #
