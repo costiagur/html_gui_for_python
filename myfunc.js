@@ -24,7 +24,7 @@ myfunc.resp_close = function(){
 myfunc.sendrequest = function(fdata){
     return new Promise((resolve) =>{    
         var xhr = new XMLHttpRequest();
-        xhr.open('POST',"http://localhost:"+ui.port,true)
+        xhr.open('POST',"http://127.0.0.1:"+ui.port,true)
     
         xhr.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {   
@@ -69,8 +69,8 @@ myfunc.submit = async function(){ //request can be insert or update
         }
     
         const resobj = await myfunc.sendrequest(fdata)
-        if ( resobj[0] == "Error"){
-            myfunc.msg( resobj[0], resobj[1])
+        if (resobj[0] == "Error"){
+            myfunc.msg(resobj[0], resobj[1])
        }
        else{
            if (resobj[0].slice(0,2) == "in"){

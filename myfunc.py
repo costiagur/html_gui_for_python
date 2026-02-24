@@ -2,8 +2,6 @@ import base64
 import json
 import common
 
-CODESTR = "myhtmlgiu"
-
 def myfunc(queryobj):
     try:
         postdict = queryobj._POST()
