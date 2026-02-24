@@ -2,18 +2,36 @@ import webserv
 import webbrowser
 import os
 from sys import argv
-import random
 import ctypes
 import common
 from platform import system
+import socket
+import uiclientjs
 
 def main():
 
     common.intiate()
-
     HOST = '127.0.0.1'
-    iniPORT = 50000
-    newPORT = random.randint(50000,60000)
+
+
+    def find_free_port(): #Find a random free TCP port
+    
+        for newport in range(50000,59999,1):
+            try:
+                with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                    s.bind((HOST, newport))  
+                    return s.getsockname()[1]
+
+            except PermissionError as e:
+                pass
+            #
+            except OSError as e:
+                if e.errno == 98:
+                    pass
+            #
+
+    newPORT = find_free_port()
+
 
     print(argv)
 
@@ -37,26 +55,14 @@ def main():
             ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
         #
 
+        serv = webserv.HttpServer((HOST,newPORT),webserv.Handler,newPORT,querystr)
+        
+        uiclientjs.uiclientjs(newPORT)
+
         htmlfilepath = "file://" + currentfolder + "/index.html"
 
         webbrowser.open(htmlfilepath) #open html file of the UI
 
-        serv = webserv.HttpServer((HOST,iniPORT),webserv.Handler,newPORT,querystr)
-
-        while common.replyed == 0:
-            if common.close == False:
-                print("trying connection")
-                serv.run_once()
-            
-            elif common.close == True: #in case connection wasn't established and browser was closed
-                serv.close()
-                return
-            #
-        #
-
-        serv.close()
-        serv = webserv.HttpServer((HOST,newPORT),webserv.Handler,newPORT,querystr)
-        
         while common.close == False:
             serv.run_once()
         #

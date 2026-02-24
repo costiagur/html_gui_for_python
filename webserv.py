@@ -23,25 +23,11 @@ class Handler(http.server.BaseHTTPRequestHandler):
                 if thisrequest == 'close':
                     common.close = True
                     print('request to close')
-                    #exit()
-                #
-                elif "uiportcodeword" in thisrequest:
-                    print("requesting codeword")
-
-                    if thisrequest.removeprefix("uiportcodeword=") == myfunc.CODESTR:
-                        common.replyed = 1
-                        returnstr = '{"port":' + str(self.newPORT) + ', "args":' + self.querystr + '}'
-                        return returnstr.encode()
-                    #
-                    else:
-                        common.replyed = 0
-                        returnstr = '{"port":-1}'
-                        return returnstr.encode()
-                    #
+                    return b''
+                else:
+                    return myfunc.myfunc(queryobj)
                 #
             #
-
-            return myfunc.myfunc(queryobj)
         #
         except Exception as e:
             common.errormsg(title=__name__ + "_processing",message=e)

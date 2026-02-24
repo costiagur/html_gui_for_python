@@ -3,7 +3,6 @@ from tkinter import messagebox
 from tkinter import filedialog
 from tkinter import simpledialog
 
-replyed = 0
 close = False
 
 def intiate():
