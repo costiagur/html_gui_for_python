@@ -1,5 +1,5 @@
 ## create 
-def uiclientjs(port):
+def uiclientjs(port,currentfolder):
     uiclientstr = f"""
 ui = new Object();
 
@@ -30,7 +30,7 @@ window.addEventListener('beforeunload',function(event){{ //when closing browser,
     
 }})
 """
-    with open("uiclient.js","w") as jsfile:
+    with open(f'{currentfolder}/uiclient.js',"w") as jsfile:
         jsfile.write(uiclientstr)
     #
 #
