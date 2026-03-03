@@ -57,7 +57,7 @@ def main():
 
         serv = webserv.HttpServer((HOST,newPORT),webserv.Handler,newPORT,querystr)
         
-        uiclientjs.uiclientjs(newPORT)
+        uiclientjs.uiclientjs(newPORT,currentfolder)
 
         htmlfilepath = "file://" + currentfolder + "/index.html"
 
@@ -83,3 +83,4 @@ def main():
 if __name__ == "__main__":
     main()
 #
+
