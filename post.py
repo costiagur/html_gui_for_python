@@ -50,7 +50,7 @@ class POST:
                 paramname = contDisp[contDisp.find(b'; name=') + 8 : -1]
                 paramname = paramname.decode()
 
-                contData = contData.decode()
+                contData = contData.decode() #binary file data decoded as UTF-8 unconditionally
             #           
 
             self.resdict[paramname] = (filename,contData)
