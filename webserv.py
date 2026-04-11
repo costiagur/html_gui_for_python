@@ -3,6 +3,8 @@ import common
 import post
 #from sys import exit
 import myfunc
+import ctypes
+from platform import system
 
 
 class Handler(http.server.BaseHTTPRequestHandler):
@@ -52,7 +54,9 @@ class Handler(http.server.BaseHTTPRequestHandler):
 
         queryobj = post.POST(self)
 
-        replymsg = self.processing(queryobj) #,self.custmethod)
+        replymsg = self.processing(queryobj)
+        if replymsg is None:
+            replymsg = b''   # guard against None
 
         self.set_headers() #set headers of response
         
@@ -76,6 +80,9 @@ class HttpServer(http.server.HTTPServer):
     def run_once(self):      
         try:
             self.handle_request()
+            if system() == 'Windows':
+                ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
+            #
         #
         except Exception as e:
             common.errormsg(title=__name__ + "_HttpServer",message=e)

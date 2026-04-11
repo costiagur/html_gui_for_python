@@ -2,9 +2,9 @@ import webserv
 import webbrowser
 import os
 from sys import argv
-import ctypes
+#import ctypes
 import common
-from platform import system
+#from platform import system
 import socket
 import uiclientjs
 
@@ -29,6 +29,9 @@ def main():
                 if e.errno == 98:
                     pass
             #
+        #
+        raise RuntimeError("No free port found in range 50000-59999")
+    #
 
     newPORT = find_free_port()
 
@@ -42,17 +45,21 @@ def main():
             arglist = []
 
             for eacharg in argv[1:]:
-                argarr = eacharg.split(":")
-                arglist.append('"' + str(argarr[0]) + '":"' + str(argarr[1]) + '"')
+                if ":" in eacharg:
+                    argarr = eacharg.split(":")
+                    arglist.append('"' + str(argarr[0]) + '":"' + str(argarr[1]) + '"')
             #
-
-            querystr = "{" + ",".join(arglist) + "}"
+            if len (arglist) != 0:
+                querystr = "{" + ",".join(arglist) + "}"
+            else:
+                raise RuntimeError("Argument string is malwritten. No :")
+            #
         #
 
         currentfolder =  os.path.dirname(os.path.realpath(__file__))
 
-        if system() == 'Windows':
-            ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
+        #if system() == 'Windows':
+        #    ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
         #
 
         serv = webserv.HttpServer((HOST,newPORT),webserv.Handler,newPORT,querystr)
